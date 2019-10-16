@@ -1,0 +1,104 @@
+#include <stdio.h>
+
+void algorithm(int* array, int n); 
+int find(int* v, int* u, int n, int m);
+void fill(int * p);
+void stack(int* p, int n);
+int l = 0;
+
+int main() {
+    
+    int n_size, m_size;
+    scanf("%i %i", &n_size, &m_size);
+    
+    int v[n_size];
+    int u[m_size];
+    
+    fill(u);
+    stack(v, n_size);
+    algorithm(v, n_size);
+    
+    printf("%i", find(v, u, n_size, m_size));
+    return 0;
+}
+
+void algorithm(int* array, int n) {
+    int b_size; 
+    if(n % 2 == 0)
+        b_size = n/2;
+    else
+        b_size = n/2 +1;
+        
+    int a[n/2];
+    int b[b_size];
+    int k = 1, a_i = 0, b_i = 0, i = 0;
+    
+    while(i < n) {
+       if(k % 2 == 0) {
+           a[a_i] = array[i];
+           a_i++;
+       }
+       else {
+           b[b_i] = array[i];
+           b_i++;
+       }
+       k++;
+       i++;
+    }
+    
+    if(b_size != 1)
+    {
+        algorithm(b, b_size);
+    }
+    
+    if( sizeof(a)/sizeof(int) != 1)
+    {
+        algorithm(a, sizeof(a)/sizeof(int));
+    }
+    
+    if( l != 1) {
+    i = 0;
+    while(i < (sizeof(a)/sizeof(int))) {
+        array[i] = a[i]; 
+        i++;
+    }
+ 
+    k = 0;
+    while(k < b_size) {
+        array[i++] = b[k];
+        k++;
+    }   
+    }
+        
+}
+
+int find(int* v, int* u, int n, int m ) {
+    for(int i =0; i < n; i++) {
+        int k = 0;
+        while(v[i]==u[k]) {
+            k++;
+            i++;
+            if(k == m) {
+                return 1;
+            }
+            
+        }
+    }
+    return 0;
+}
+
+
+void fill(int * p) {
+    int n = 1, i = 0, k =0;
+    while(n == 1) {
+        n = scanf("%i", &i);
+        p[k++] = i;
+    }
+}
+
+
+void stack(int* p, int n) {
+    for(int i = 0; i < n; i++) {
+        p[i] = i+1;
+    }
+}
